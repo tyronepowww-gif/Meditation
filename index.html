@@ -796,6 +796,14 @@
 
       return labels[stat] || stat;
     }
+      const stats = {
+        focus: player.focus,
+        discipline: player.discipline,
+        perception: player.perception,
+        aura_control: player.aura_control,
+        mana_density: player.mana_density,
+        mana_capacity: player.mana_capacity
+      };
 
     function meterPercent(value) {
       return Math.min(100, Math.max(5, value));
@@ -888,8 +896,9 @@ ${auraRank()}
       const focusRating = Number(elements.focusRating.value);
 
       const mission = currentMission;
-      const xpGain = minutes * 10;
-      const gain = Math.max(1, Math.floor(minutes / 5));
+      const focusMultiplier = 0.6 + focusRating * 0.08;
+      const xpGain = Math.round(minutes * 10 * focusMultiplier);
+      const gain = Math.max(1, Math.floor((minutes / 5) * focusMultiplier));
       const startingLevel = player.level;
 
       player.xp += xpGain;
